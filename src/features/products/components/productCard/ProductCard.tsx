@@ -1,4 +1,4 @@
-import { FC, useCallback, useMemo } from 'react';
+import { FC, useCallback, useMemo, useRef } from 'react';
 import GlassButton from '~/components/buttons/GlassButton';
 import EyeIcon from '~/components/icons/EyeIcon';
 import { IProduct } from '~/types/IProduct';
@@ -39,6 +39,9 @@ const ProductCard: FC<ProductCardProps> = ({
   discountPercentage,
   stock,
 }) => {
+  const imageLoadRetries = useRef(5);
+  const thumbnailRef = useRef<HTMLImageElement>(null);
+
   const discountAmount = useMemo(
     () => (price * discountPercentage) / 100,
     [price, discountPercentage]
@@ -57,10 +60,31 @@ const ProductCard: FC<ProductCardProps> = ({
     []
   );
 
+  const handleImageError = () => {
+    if (imageLoadRetries.current > 0) {
+      setTimeout(() => {
+        if (thumbnailRef.current) {
+          thumbnailRef.current.src = thumbnail;
+        }
+      }, 1000);
+      imageLoadRetries.current -= 1;
+    } else {
+      if (thumbnailRef.current) {
+        thumbnailRef.current.src = 'https://fakeimg.pl/300x300/ece7e9/?text=+';
+      }
+    }
+  };
+
   return (
     <ProductCardContainer>
       <ProductCardMediaContainer className="media-container">
-        <ProductThumbnail src={thumbnail} className="thumbnail" />
+        <ProductThumbnail
+          ref={thumbnailRef}
+          src={thumbnail}
+          className="thumbnail"
+          onError={handleImageError}
+          loading="lazy"
+        />
 
         <ProductWishListButton id={id} />
 

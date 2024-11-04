@@ -42,8 +42,8 @@ export const ProductCardMediaContainer = styled.div`
   border-radius: 8px;
   position: relative;
   width: 100%;
-  /* height: 300px; */
   overflow: hidden;
+  min-height: calc(100vw / 5);
 
   @media screen and (max-width: 576px) {
     height: 150px;
