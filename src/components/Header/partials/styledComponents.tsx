@@ -4,6 +4,11 @@ export const HeaderSection = styled.section`
   padding: 20px 0;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   margin-bottom: 20px;
+  position: sticky;
+  top: 0;
+  left: 0;
+  background-color: #fff;
+  z-index: 2;
 `;
 
 export const StoreName = styled.div`
