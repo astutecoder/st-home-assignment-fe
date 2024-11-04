@@ -89,7 +89,11 @@ const ProductCard: FC<ProductCardProps> = ({
         <ProductWishListButton id={id} />
 
         <ActionButtons className="action-btns">
-          <ProductAddToCart id={id} stock={stock} />
+          {stock ? (
+            <ProductAddToCart id={id} stock={stock} />
+          ) : (
+            <GlassButton>Out of Stock</GlassButton>
+          )}
           <GlassButton>
             <EyeIcon />
             <span>Quick view</span>
