@@ -1,15 +1,29 @@
-import { makeAutoObservable } from 'mobx';
+import { IReactionDisposer, makeAutoObservable, reaction, toJS } from 'mobx';
 import { IProduct } from '~/types/IProduct';
 
+const WISH_LIST_STORAGE_KEY = 'SHARE_TRIP_FE_WISH_LIST';
+
 class WishListStore {
+  disposers: IReactionDisposer[] = [];
   private _wishList: Map<string | number, IProduct> = new Map();
 
   constructor() {
     makeAutoObservable(this);
 
+    this.loadFromStorage();
+
     this.addToWishList = this.addToWishList.bind(this);
     this.removeFromWishList = this.removeFromWishList.bind(this);
     this.isInWishList = this.isInWishList.bind(this);
+
+    this.disposers.push(
+      reaction(
+        () => toJS(this.wishList),
+        (wishList) => {
+          localStorage.setItem(WISH_LIST_STORAGE_KEY, JSON.stringify(wishList));
+        }
+      )
+    );
   }
 
   get wishList() {
@@ -30,6 +44,22 @@ class WishListStore {
 
   isInWishList(productId: IProduct['id']) {
     return this._wishList.has(productId);
+  }
+
+  loadFromStorage(): void {
+    const data = localStorage.getItem(WISH_LIST_STORAGE_KEY);
+
+    this.hydrateStore(JSON.parse(data || '[]'));
+  }
+
+  hydrateStore(wishList: IProduct[]): void {
+    for (const product of wishList) {
+      this._wishList.set(product.id, product);
+    }
+  }
+
+  dispose() {
+    this.disposers.forEach((disposer) => disposer());
   }
 }
 
