@@ -14,6 +14,10 @@ class ProductStore {
     return Array.from(this._products.values());
   }
 
+  get total() {
+    return this._products.size;
+  }
+
   appendProducts(products: IProduct[]) {
     for (const product of products) {
       this._products.set(product.id, product);

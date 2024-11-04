@@ -16,6 +16,10 @@ class WishListStore {
     return Array.from(this._wishList.values());
   }
 
+  get total() {
+    return this._wishList.size;
+  }
+
   addToWishList(product: IProduct) {
     this._wishList.set(product.id, product);
   }

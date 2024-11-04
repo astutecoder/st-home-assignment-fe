@@ -12,6 +12,13 @@ class CartStore {
     this.updateCart = this.updateCart.bind(this);
   }
 
+  get total() {
+    return Object.keys(this.cart.frequencies).reduce(
+      (acc, current) => +(this.cart.frequencies[current] || 0) + acc,
+      0
+    );
+  }
+
   public updateCart({
     productId,
     quantity,
