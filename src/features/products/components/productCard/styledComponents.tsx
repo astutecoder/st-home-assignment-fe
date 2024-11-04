@@ -2,12 +2,12 @@ import styled from 'styled-components';
 import { THEME } from '~/utils/constants/theme';
 
 export const ProductCardContainer = styled.div`
-  /* width: 300px; */
+  border-radius: 8px;
+  cursor: pointer;
   max-width: 100%;
   padding: 4px;
-  border-radius: 8px;
+  position: relative;
   transition: box-shadow 0.25s ease-in-out;
-  cursor: pointer;
 
   &:hover {
     box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.15);
@@ -57,7 +57,7 @@ export const ProductThumbnail = styled.img`
   height: 100%;
   object-fit: cover;
   object-position: center;
-  transition: transform 3s 0.5s ease-in-out;
+  transition: transform 3s ease-in-out;
 
   @media screen and (max-width: 576px) {
     height: 150px;

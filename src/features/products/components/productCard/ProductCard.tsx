@@ -17,6 +17,7 @@ import {
   ProductThumbnail,
   ProductTitle,
 } from './styledComponents';
+import DiscountRibon from './DiscountRibon';
 
 type ProductCardProps = Pick<
   IProduct,
@@ -85,7 +86,6 @@ const ProductCard: FC<ProductCardProps> = ({
           onError={handleImageError}
           loading="lazy"
         />
-
         <ProductWishListButton id={id} />
 
         <ActionButtons className="action-btns">
@@ -115,6 +115,10 @@ const ProductCard: FC<ProductCardProps> = ({
           <ComparedPrice>৳ {formatAmount(price)}</ComparedPrice>
         </PriceContainer>
       </ProductInfoContainer>
+
+      {discountPercentage ? (
+        <DiscountRibon amount={formatAmount(discountAmount)} />
+      ) : null}
     </ProductCardContainer>
   );
 };
