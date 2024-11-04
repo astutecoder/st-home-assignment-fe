@@ -1432,6 +1432,16 @@ react-is@^16.13.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-18.3.1.tgz#e83557dc12eae63a99e003a46388b1dcbb44db7e"
   integrity sha512-/LLMVyas0ljjAtoYiPqYiL8VWXzUUdThrmU5+n20DZv+a+ClRoevUzw5JxU+Ieh5/c87ytoTBV9G1FiKfNJdmg==
 
+react-modern-drawer@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/react-modern-drawer/-/react-modern-drawer-1.4.0.tgz#2d616b3f6f45a214186c099dff0c0233f51c2ac2"
+  integrity sha512-5OkcUstqUdd/CNW9+BvLkzm36R2G54RFXWF2mWCH13cUsz5SNo9aB9KzPRbJp2LEVfRL/u+MgikOWRe7/6wKEQ==
+
+react-photo-view@^1.2.6:
+  version "1.2.6"
+  resolved "https://registry.yarnpkg.com/react-photo-view/-/react-photo-view-1.2.6.tgz#0302ad35e4590a15a62edb271b5524f76f2777e4"
+  integrity sha512-Fq17yxkMIv0oFp7HOJr39HgCZRP6A9K5T5rixJ4flSUYT2OO3V8vNxEExjhIKgIrfmTu+mDnHYEsI9RRWi1JHw==
+
 react-refresh@^0.14.2:
   version "0.14.2"
   resolved "https://registry.yarnpkg.com/react-refresh/-/react-refresh-0.14.2.tgz#3833da01ce32da470f1f936b9d477da5c7028bf9"

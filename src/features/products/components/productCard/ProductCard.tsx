@@ -1,9 +1,11 @@
-import { FC, useCallback, useMemo, useRef } from 'react';
+import { FC, useCallback, useMemo, useRef, useState } from 'react';
+import { PhotoSlider } from 'react-photo-view';
+import 'react-photo-view/dist/react-photo-view.css';
 import GlassButton from '~/components/buttons/GlassButton';
 import EyeIcon from '~/components/icons/EyeIcon';
+import LoadingIcon from '~/components/icons/LoadingIcon';
 import { IProduct } from '~/types/IProduct';
-import ProductAddToCart from './ProductAddToCart';
-import ProductWishListButton from './ProductWishListButton';
+import { THEME } from '~/utils/constants/theme';
 import {
   ActionButtons,
   ComparedPrice,
@@ -16,8 +18,10 @@ import {
   ProductNameContainer,
   ProductThumbnail,
   ProductTitle,
-} from './styledComponents';
+} from '../styledComponents';
 import DiscountRibon from './DiscountRibon';
+import ProductAddToCart from './ProductAddToCart';
+import ProductWishListButton from './ProductWishListButton';
 
 type ProductCardProps = Pick<
   IProduct,
@@ -34,12 +38,15 @@ type ProductCardProps = Pick<
 const ProductCard: FC<ProductCardProps> = ({
   id,
   thumbnail,
+  images,
   brand,
   title,
   price,
   discountPercentage,
   stock,
 }) => {
+  const [showImages, setShowImages] = useState(false);
+
   const imageLoadRetries = useRef(5);
   const thumbnailRef = useRef<HTMLImageElement>(null);
 
@@ -76,6 +83,10 @@ const ProductCard: FC<ProductCardProps> = ({
     }
   };
 
+  const toggleQuickView = () => {
+    setShowImages((prev) => !prev);
+  };
+
   return (
     <ProductCardContainer>
       <ProductCardMediaContainer className="media-container">
@@ -94,7 +105,7 @@ const ProductCard: FC<ProductCardProps> = ({
           ) : (
             <GlassButton>Out of Stock</GlassButton>
           )}
-          <GlassButton>
+          <GlassButton onClick={toggleQuickView}>
             <EyeIcon />
             <span>Quick view</span>
           </GlassButton>
@@ -119,6 +130,18 @@ const ProductCard: FC<ProductCardProps> = ({
       {discountPercentage ? (
         <DiscountRibon amount={formatAmount(discountAmount)} />
       ) : null}
+
+      <PhotoSlider
+        images={images.map((item) => ({ src: item, key: item }))}
+        visible={showImages}
+        onClose={() => {
+          setShowImages(false);
+        }}
+        loop={images.length - 1}
+        loadingElement={
+          <LoadingIcon size={50} fill={THEME.COLORS.PRIMARY['500']} />
+        }
+      />
     </ProductCardContainer>
   );
 };

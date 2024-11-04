@@ -1,9 +1,9 @@
-import WishListIcon from '~/components/icons/WishListIcon';
-import { WishlistIconWrapper } from './styledComponents';
-import { FC } from 'react';
-import { IProduct } from '~/types/IProduct';
 import { observer } from 'mobx-react';
+import { FC } from 'react';
+import WishListIcon from '~/components/icons/WishListIcon';
 import { wishListStore } from '~/store';
+import { IProduct } from '~/types/IProduct';
+import { WishlistIconWrapper } from '../styledComponents';
 
 const ProductWishListButton: FC<Pick<IProduct, 'id'>> = observer(({ id }) => {
   const { isInWishList, addToWishList, removeFromWishList } = wishListStore;
