@@ -3,6 +3,15 @@ import { IProduct } from '~/types/IProduct';
 
 class ProductStore {
   private _products: Map<string | number, IProduct> = new Map();
+  meta: {
+    shouldFetchMore: boolean;
+    currentPage: number;
+    productsPerPage: number;
+  } = {
+    shouldFetchMore: true,
+    currentPage: 0,
+    productsPerPage: 30,
+  };
 
   constructor() {
     makeAutoObservable(this);

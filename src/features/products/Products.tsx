@@ -1,20 +1,12 @@
-import { useEffect } from 'react';
-import styled from 'styled-components';
-import { getProducts } from '~/services/product.service';
-import { productStore } from '~/store/productStore';
-import ProductCard from './components/productCard/ProductCard';
 import { observer } from 'mobx-react';
+import styled from 'styled-components';
 import { Container } from '~/components/layout/Container';
+import { productStore } from '~/store/productStore';
+import LoadMore from './components/LoadMore';
+import ProductCard from './components/productCard/ProductCard';
 
 const Products = observer(() => {
-  const { products, appendProducts } = productStore;
-
-  useEffect(() => {
-    (async () => {
-      const { products } = (await getProducts()) || [];
-      appendProducts(products);
-    })();
-  }, []);
+  const { products } = productStore;
 
   return (
     <Container>
@@ -33,6 +25,8 @@ const Products = observer(() => {
           />
         ))}
       </ProductList>
+
+      <LoadMore />
     </Container>
   );
 });
