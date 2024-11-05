@@ -1,5 +1,6 @@
 import { IReactionDisposer, makeAutoObservable, reaction, toJS } from 'mobx';
 import { IProduct } from '~/types/IProduct';
+import { formatNumbers } from '~/utils/numbers';
 
 const PRODUCT_STORAGE_KEY = 'SHARE_TRIP_FE_PRODUCTS';
 const PRODUCT_FETCH_META_STORAGE_KEY = 'SHARE_TRIP_FE_PRODUCTS_FETCH_META';
@@ -24,6 +25,8 @@ class ProductStore {
 
     this.loadFromStorage();
     this.appendProducts = this.appendProducts.bind(this);
+    this.findProduct = this.findProduct.bind(this);
+    this.productPrice = this.productPrice.bind(this);
 
     this.disposers.push(
       reaction(
@@ -64,6 +67,32 @@ class ProductStore {
         this._products.set(product.id, product);
       }
     }
+  }
+
+  productPrice(productId: string | number) {
+    const { discountAmount, currentPrice } = this.calcItemPrice(productId);
+
+    return {
+      discountAmount: formatNumbers(discountAmount),
+      currentPrice: formatNumbers(currentPrice),
+    };
+  }
+
+  private calcItemPrice(productId: string | number) {
+    const product = this._products.get(productId);
+
+    if (!product)
+      return {
+        discountAmount: 0,
+        currentPrice: 0,
+      };
+
+    const discountAmount = Number(
+      ((product.price * product.discountPercentage) / 100).toFixed(2)
+    );
+    const currentPrice = product.price - discountAmount;
+
+    return { discountAmount, currentPrice };
   }
 
   private loadFromStorage(): void {

@@ -46,13 +46,13 @@ class WishListStore {
     return this._wishList.has(productId);
   }
 
-  loadFromStorage(): void {
+  private loadFromStorage(): void {
     const data = localStorage.getItem(WISH_LIST_STORAGE_KEY);
 
     this.hydrateStore(JSON.parse(data || '[]'));
   }
 
-  hydrateStore(wishList: IProduct[]): void {
+  private hydrateStore(wishList: IProduct[]): void {
     for (const product of wishList) {
       this._wishList.set(product.id, product);
     }

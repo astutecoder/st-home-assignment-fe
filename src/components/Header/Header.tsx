@@ -1,5 +1,5 @@
-import { Container } from '../layout/Container';
 import Cart from './partials/Cart';
+import { Container } from '../layout/Container';
 import {
   Buttons,
   HeaderSection,

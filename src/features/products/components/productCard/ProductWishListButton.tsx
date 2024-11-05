@@ -1,16 +1,18 @@
 import { observer } from 'mobx-react';
 import { FC } from 'react';
 import WishListIcon from '~/components/icons/WishListIcon';
-import { wishListStore } from '~/store';
+import { productStore, wishListStore } from '~/store';
 import { IProduct } from '~/types/IProduct';
 import { WishlistIconWrapper } from '../styledComponents';
 
 const ProductWishListButton: FC<Pick<IProduct, 'id'>> = observer(({ id }) => {
   const { isInWishList, addToWishList, removeFromWishList } = wishListStore;
+  const { findProduct } = productStore;
 
   const handleToggleWishList = () => {
-    if (!isInWishList(id)) {
-      addToWishList({ id } as IProduct);
+    const product = findProduct(id);
+    if (!isInWishList(id) && product) {
+      addToWishList(product);
     } else {
       removeFromWishList(id);
     }
