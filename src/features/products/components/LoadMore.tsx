@@ -7,7 +7,7 @@ import { IProduct } from '~/types/IProduct';
 import { THEME } from '~/utils/constants/theme';
 
 const LoadMore = () => {
-  const { appendProducts, meta, total } = productStore;
+  const { appendProducts, meta, total, updateFetchMeta } = productStore;
   const [loading, setLoading] = useState(false);
   const isOffline = useRef(false);
 
@@ -36,9 +36,9 @@ const LoadMore = () => {
       total: number;
     };
 
-    meta.currentPage += 1;
+    updateFetchMeta({ currentPage: meta.currentPage + 1 });
     if (total + meta.productsPerPage >= totalProducts) {
-      meta.shouldFetchMore = false;
+      updateFetchMeta({ shouldFetchMore: false });
     }
 
     appendProducts(products);
@@ -55,9 +55,7 @@ const LoadMore = () => {
 
   return (
     <Waypoint onEnter={handleFetchMore}>
-      {meta.shouldFetchMore ? (
-        <div style={{ marginBottom: '30px' }}>...</div>
-      ) : null}
+      {meta.shouldFetchMore ? <div style={{ height: '150px' }} /> : null}
     </Waypoint>
   );
 };

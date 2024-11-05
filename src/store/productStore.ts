@@ -27,6 +27,7 @@ class ProductStore {
     this.appendProducts = this.appendProducts.bind(this);
     this.findProduct = this.findProduct.bind(this);
     this.productPrice = this.productPrice.bind(this);
+    this.updateFetchMeta = this.updateFetchMeta.bind(this);
 
     this.disposers.push(
       reaction(
@@ -114,6 +115,10 @@ class ProductStore {
   }): void {
     this.appendProducts(products);
     this.meta = meta;
+  }
+
+  updateFetchMeta(data: Partial<typeof INITIAL_FETCH_META>) {
+    this.meta = { ...this.meta, ...data };
   }
 
   dispose() {
