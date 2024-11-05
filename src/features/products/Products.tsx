@@ -12,7 +12,7 @@ const Products = observer(() => {
 
   return (
     <Container>
-      <ErrorBoundary fallback={<h1>something went wrong</h1>}>
+      <ErrorBoundary fallback={<h1>Something went wrong!</h1>}>
         {!products.length && !isFetching ? (
           <EmptyProductList />
         ) : (
