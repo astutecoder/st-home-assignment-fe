@@ -8,7 +8,7 @@ import { IProduct } from '~/types/IProduct';
 
 const ProductAddToCart: FC<Pick<IProduct, 'id' | 'stock'>> = observer(
   ({ id, stock }) => {
-    const { cart, updateCart } = cartStore;
+    const { cart, updateCart, removeItem } = cartStore;
     const itemsInCart = cart?.frequencies?.[id] || 0;
 
     const handleAddToCart = (e: MouseEvent) => {
@@ -21,7 +21,10 @@ const ProductAddToCart: FC<Pick<IProduct, 'id' | 'stock'>> = observer(
     const handleRemoveFromCart = (e: MouseEvent) => {
       e.preventDefault();
 
-      if (itemsInCart < 1) return;
+      if (itemsInCart <= 1) {
+        removeItem(id);
+        return;
+      }
       updateCart({ productId: id, quantity: itemsInCart - 1 });
     };
 
