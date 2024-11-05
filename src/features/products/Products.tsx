@@ -1,32 +1,40 @@
 import { observer } from 'mobx-react';
 import styled from 'styled-components';
 import { Container } from '~/components/Container';
+import ErrorBoundary from '~/components/ErrorBoundary';
 import { productStore } from '~/store/productStore';
+import EmptyProductList from './components/EmptyProductList';
 import LoadMore from './components/LoadMore';
 import ProductCard from './components/productCard/ProductCard';
 
 const Products = observer(() => {
-  const { products } = productStore;
+  const { products, isFetching } = productStore;
 
   return (
     <Container>
-      <ProductList>
-        {products?.map((product) => (
-          <ProductCard
-            key={product.id}
-            id={product.id}
-            thumbnail={product.thumbnail}
-            images={product.images}
-            brand={product.brand}
-            title={product.title}
-            price={product.price}
-            discountPercentage={product.discountPercentage}
-            stock={product.stock}
-          />
-        ))}
-      </ProductList>
+      <ErrorBoundary fallback={<h1>something went wrong</h1>}>
+        {!products.length && !isFetching ? (
+          <EmptyProductList />
+        ) : (
+          <ProductList>
+            {products?.map((product) => (
+              <ProductCard
+                key={product.id}
+                id={product.id}
+                thumbnail={product.thumbnail}
+                images={product.images}
+                brand={product.brand}
+                title={product.title}
+                price={product.price}
+                discountPercentage={product.discountPercentage}
+                stock={product.stock}
+              />
+            ))}
+          </ProductList>
+        )}
 
-      <LoadMore />
+        <LoadMore />
+      </ErrorBoundary>
     </Container>
   );
 });

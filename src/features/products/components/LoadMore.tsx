@@ -7,13 +7,15 @@ import { IProduct } from '~/types/IProduct';
 import { THEME } from '~/utils/constants/theme';
 
 const LoadMore = () => {
-  const { appendProducts, meta, total, updateFetchMeta } = productStore;
+  const { appendProducts, meta, total, updateFetchMeta, updateFetchingStatus } =
+    productStore;
   const [loading, setLoading] = useState(false);
   const isOffline = useRef(false);
 
   const handleFetchMore = async () => {
     if (!meta.shouldFetchMore) return;
     setLoading(true);
+    updateFetchingStatus(true);
 
     let result: unknown;
 
@@ -29,6 +31,7 @@ const LoadMore = () => {
       return;
     } finally {
       setLoading(false);
+      updateFetchingStatus(false);
     }
 
     const { products, total: totalProducts } = result as {

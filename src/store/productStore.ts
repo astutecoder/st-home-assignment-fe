@@ -11,9 +11,11 @@ const INITIAL_FETCH_META = {
 };
 
 class ProductStore {
-  private _products: Map<string | number, IProduct> = new Map();
   disposers: IReactionDisposer[] = [];
 
+  private _products: Map<string | number, IProduct> = new Map();
+
+  isFetching: boolean = true;
   meta: {
     shouldFetchMore: boolean;
     currentPage: number;
@@ -28,6 +30,7 @@ class ProductStore {
     this.findProduct = this.findProduct.bind(this);
     this.productPrice = this.productPrice.bind(this);
     this.updateFetchMeta = this.updateFetchMeta.bind(this);
+    this.updateFetchingStatus = this.updateFetchingStatus.bind(this);
 
     this.disposers.push(
       reaction(
@@ -56,6 +59,10 @@ class ProductStore {
 
   get total() {
     return this._products.size;
+  }
+
+  updateFetchingStatus(status: boolean) {
+    this.isFetching = status;
   }
 
   findProduct(id: string | number) {
