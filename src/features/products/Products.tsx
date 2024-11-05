@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react';
 import styled from 'styled-components';
-import { Container } from '~/components/layout/Container';
+import { Container } from '~/components/Container';
 import { productStore } from '~/store/productStore';
 import LoadMore from './components/LoadMore';
 import ProductCard from './components/productCard/ProductCard';

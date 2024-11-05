@@ -1,6 +1,7 @@
 import { toJS } from 'mobx';
 import { observer } from 'mobx-react';
 import { useState } from 'react';
+import styled from 'styled-components';
 import Badge from '~/components/Badge';
 import Drawer from '~/components/Drawer';
 import CartIcon from '~/components/icons/CartIcon';
@@ -9,9 +10,8 @@ import List from '~/components/list/List';
 import { cartStore } from '~/store';
 import { THEME } from '~/utils/constants/theme';
 import useScreenResize from '~/utils/hooks/useScreenResize';
-import { BadgeContainer, IconWrapper } from './styledComponents';
 
-const Cart = observer(() => {
+const CartButton = observer(() => {
   const { total, cart } = cartStore;
   const [showDrawer, setShowDrawer] = useState(false);
   const { screenWidth } = useScreenResize();
@@ -50,4 +50,15 @@ const Cart = observer(() => {
   );
 });
 
-export default Cart;
+export default CartButton;
+
+const IconWrapper = styled.div`
+  position: relative;
+  cursor: pointer;
+`;
+
+const BadgeContainer = styled.div`
+  position: absolute;
+  top: -10px;
+  right: -5px;
+`;

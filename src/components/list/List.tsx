@@ -1,5 +1,5 @@
 import { ComponentType, Fragment, ReactElement, useMemo } from 'react';
-import { Container } from '../layout/Container';
+import { Container } from '../Container';
 
 type ListProps<T extends { id: string | number }> = {
   items: T[];

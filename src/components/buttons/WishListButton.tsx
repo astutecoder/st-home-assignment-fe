@@ -1,6 +1,7 @@
 import { toJS } from 'mobx';
 import { observer } from 'mobx-react';
 import { useState } from 'react';
+import styled from 'styled-components';
 import Badge from '~/components/Badge';
 import Drawer from '~/components/Drawer';
 import WishListIcon from '~/components/icons/WishListIcon';
@@ -9,9 +10,8 @@ import WishtListItem from '~/components/list/WishListItem';
 import { wishListStore } from '~/store';
 import { THEME } from '~/utils/constants/theme';
 import useScreenResize from '~/utils/hooks/useScreenResize';
-import { BadgeContainer, IconWrapper } from './styledComponents';
 
-const WishList = observer(() => {
+const WishListButton = observer(() => {
   const { screenWidth } = useScreenResize();
   const [showDrawer, setShowDrawer] = useState(false);
 
@@ -48,4 +48,15 @@ const WishList = observer(() => {
   );
 });
 
-export default WishList;
+export default WishListButton;
+
+const IconWrapper = styled.div`
+  position: relative;
+  cursor: pointer;
+`;
+
+const BadgeContainer = styled.div`
+  position: absolute;
+  top: -10px;
+  right: -5px;
+`;

@@ -2,7 +2,7 @@ import { observer } from 'mobx-react';
 import { FC, MouseEvent } from 'react';
 import GlassButton from '~/components/buttons/GlassButton';
 import PrimaryButton from '~/components/buttons/PrimaryButton';
-import AddToCart from '~/components/cart/AddToCart';
+import AddToCart from '~/components/buttons/AddToCart';
 import { cartStore } from '~/store';
 import { IProduct } from '~/types/IProduct';
 
