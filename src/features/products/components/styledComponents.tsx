@@ -41,6 +41,8 @@ export const ProductCardContainer = styled.div`
 export const ProductCardMediaContainer = styled.div`
   background-color: #ece7e9;
   border-radius: 8px;
+  display: flex;
+  align-items: center;
   position: relative;
   width: 100%;
   overflow: hidden;
@@ -50,6 +52,9 @@ export const ProductCardMediaContainer = styled.div`
     height: 150px;
     display: flex;
     justify-content: center;
+  }
+  @media screen and (min-width: 1440px) {
+    min-height: 300px;
   }
 `;
 

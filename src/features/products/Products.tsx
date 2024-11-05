@@ -57,4 +57,8 @@ const ProductList = styled.div`
   @media screen and (min-width: 992px) {
     grid-template-columns: repeat(4, 1fr);
   }
+
+  @media screen and (min-width: 1440px) {
+    grid-template-columns: repeat(5, 1fr);
+  }
 `;
