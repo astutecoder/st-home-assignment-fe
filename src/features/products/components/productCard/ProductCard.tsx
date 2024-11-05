@@ -1,4 +1,4 @@
-import { FC, useCallback, useMemo, useRef, useState } from 'react';
+import { FC, useCallback, useMemo, useState } from 'react';
 import { PhotoSlider } from 'react-photo-view';
 import 'react-photo-view/dist/react-photo-view.css';
 import GlassButton from '~/components/buttons/GlassButton';
@@ -6,6 +6,7 @@ import EyeIcon from '~/components/icons/EyeIcon';
 import LoadingIcon from '~/components/icons/LoadingIcon';
 import { IProduct } from '~/types/IProduct';
 import { THEME } from '~/utils/constants/theme';
+import { formatNumbers } from '~/utils/numbers';
 import {
   ActionButtons,
   ComparedPrice,
@@ -47,9 +48,6 @@ const ProductCard: FC<ProductCardProps> = ({
 }) => {
   const [showImages, setShowImages] = useState(false);
 
-  const imageLoadRetries = useRef(5);
-  const thumbnailRef = useRef<HTMLImageElement>(null);
-
   const discountAmount = useMemo(
     () => (price * discountPercentage) / 100,
     [price, discountPercentage]
@@ -61,40 +59,25 @@ const ProductCard: FC<ProductCardProps> = ({
   );
 
   const formatAmount = useCallback(
-    (amount: number) =>
-      amount.toLocaleString(undefined, {
-        maximumFractionDigits: 2,
-      }),
+    (amount: number) => formatNumbers(amount),
     []
   );
 
-  const handleImageError = () => {
-    if (imageLoadRetries.current > 0) {
-      setTimeout(() => {
-        if (thumbnailRef.current) {
-          thumbnailRef.current.src = thumbnail;
-        }
-      }, 1000);
-      imageLoadRetries.current -= 1;
-    } else {
-      if (thumbnailRef.current) {
-        thumbnailRef.current.src = 'https://fakeimg.pl/300x300/ece7e9/?text=+';
-      }
-    }
+  const handleShowQuickView = () => {
+    setShowImages(true);
   };
 
-  const toggleQuickView = () => {
-    setShowImages((prev) => !prev);
+  const handleCloseQuickView = () => {
+    setShowImages(false);
   };
 
   return (
     <ProductCardContainer>
       <ProductCardMediaContainer className="media-container">
         <ProductThumbnail
-          ref={thumbnailRef}
           src={thumbnail}
           className="thumbnail"
-          onError={handleImageError}
+          retries={5}
           loading="lazy"
         />
         <ProductWishListButton id={id} />
@@ -105,7 +88,7 @@ const ProductCard: FC<ProductCardProps> = ({
           ) : (
             <GlassButton>Out of Stock</GlassButton>
           )}
-          <GlassButton onClick={toggleQuickView}>
+          <GlassButton onClick={handleShowQuickView}>
             <EyeIcon />
             <span>Quick view</span>
           </GlassButton>
@@ -134,9 +117,8 @@ const ProductCard: FC<ProductCardProps> = ({
       <PhotoSlider
         images={images.map((item) => ({ src: item, key: item }))}
         visible={showImages}
-        onClose={() => {
-          setShowImages(false);
-        }}
+        maskClosable={false}
+        onClose={handleCloseQuickView}
         loop={images.length - 1}
         loadingElement={
           <LoadingIcon size={50} fill={THEME.COLORS.PRIMARY['500']} />

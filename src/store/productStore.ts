@@ -54,6 +54,10 @@ class ProductStore {
     return this._products.size;
   }
 
+  findProduct(id: string | number) {
+    return this._products.get(id);
+  }
+
   appendProducts(products: IProduct[]): void {
     for (const product of products) {
       if (!this._products.has(product.id)) {
@@ -62,7 +66,7 @@ class ProductStore {
     }
   }
 
-  loadFromStorage(): void {
+  private loadFromStorage(): void {
     const products = localStorage.getItem(PRODUCT_STORAGE_KEY);
     const meta = localStorage.getItem(PRODUCT_FETCH_META_STORAGE_KEY);
 
@@ -72,7 +76,7 @@ class ProductStore {
     });
   }
 
-  hydrateStore({
+  private hydrateStore({
     products,
     meta,
   }: {

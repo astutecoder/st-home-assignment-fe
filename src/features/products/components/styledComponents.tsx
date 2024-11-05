@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import Image from '~/components/Image';
 import { THEME } from '~/utils/constants/theme';
 
 export const ProductCardContainer = styled.div`
@@ -52,7 +53,7 @@ export const ProductCardMediaContainer = styled.div`
   }
 `;
 
-export const ProductThumbnail = styled.img`
+export const ProductThumbnail = styled(Image)`
   width: 100%;
   height: 100%;
   object-fit: cover;

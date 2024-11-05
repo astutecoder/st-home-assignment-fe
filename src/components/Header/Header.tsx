@@ -13,7 +13,7 @@ const Header = () => {
     <HeaderSection>
       <Container>
         <Wrapper>
-          <StoreName>STORE NAME</StoreName>
+          <StoreName>AMAZING STORE</StoreName>
           <Buttons>
             <WishList />
             <Cart />
